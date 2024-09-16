@@ -8,3 +8,4 @@ const Recipes = new Schema({
     PostedBy: String,
     PostedAt: { type: Date, default: Date.now }
 })
+const Recipe = mongoose.model('Recipe',Recipes)
