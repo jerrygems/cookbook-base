@@ -1,24 +1,21 @@
 var express = require("express")
 var cors = require("cors")
+var cookieParser = require('cookie-parser')
 var mongoose = require("mongoose")
+var recipe = require("./routes/recipe")
+
 var app = express()
 
 
-mongoose.connect("mongodb://[::1]:27017/cookbook", {
+mongoose.connect("mongodb://0.tcp.in.ngrok.io:11225/cookbook", {
     autoCreate: true,
+    family:4
 }).then(() => {console.log("connected")}).catch((err) => console.log(err))
 
 app.use(cors());
-// app.use(cookieParser())
+app.use(cookieParser())
 
-// app.get("/api/getrecipes",getRecipes)
-// app.get("/api/createrecipe",createRecipes)
-// app.get("/api/deleterecipe",deleteRecipe)
-// app.get("/api/editrecipe",editRecipes)
-// app.get("/api/searchrecipe",searchRecipe)
-// app.get("/api/login",login)
-// app.get("/api/register",register)
-
+app.use("/api",recipe)
 
 
 app.listen(process.env.PORT || 3000, () => console.log("started"))
