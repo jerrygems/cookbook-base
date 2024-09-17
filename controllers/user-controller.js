@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 
 const getAllUsersInfo = async (req, resp)=> {
     try {
-        const allUsers = await Users.find();
+        const allUsers = await Users.find().select("-password");
         return resp.status(200).json(allUsers);
     } catch (err) {
         console.log(err);
@@ -13,7 +13,7 @@ const getAllUsersInfo = async (req, resp)=> {
 
 const verifyRole = async (req, resp)=> {
     try {
-        const token = req.headers.authorization;
+        const token = req.headers.authorization.split(" ")[1]
 
         if (!token) {
             return resp.status(401).send('access denied');

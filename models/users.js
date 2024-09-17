@@ -1,10 +1,10 @@
 const mongoose = require("mongoose")
-const { Schema } = mongoose
 
-const usersSchema = new Schema({
-    email: String,
+const usersSchema = new mongoose.Schema({
+    email: {type:String,unique:true},
     password: String,
-    role: String,
+    role: { type: String, default: 'local' ,enum:['root','local'] },
     createAt: { type: Date, default: Date.now }
 })
-const users = mongoose.model('Recipe', usersSchema)
+const users = mongoose.model('users', usersSchema)
+module.exports = users

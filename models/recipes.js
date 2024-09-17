@@ -1,12 +1,14 @@
 const mongoose = require("mongoose")
-const { Schema } = mongoose
 
-const Recipes = new Schema({
-    title: String,
+const recipeSchema = new mongoose.Schema({
+    recipeName: String,
+    description: String,
+    image: { type: String, data: Buffer },
+    content: String,
+    creator: String,
     ingredients: String,
-    thumbImage: { type: Buffer },
-    postedBy: String,
     postedAt: { type: Date, default: Date.now }
 });
 
-const Recipe = mongoose.model('Recipe',Recipes)
+const recipes = mongoose.model('recipes', recipeSchema)
+module.exports = recipes
