@@ -1,12 +1,12 @@
 const mongoose = require("mongoose")
 
 const recipeSchema = new mongoose.Schema({
-    recipeName: String,
-    description: String,
-    image: { type: String, data: Buffer },
-    content: String,
-    creator: String,
-    ingredients: String,
+    recipeName: { type: String, default: "" },
+    description: { type: String, default: "" },
+    image: { type: String, default: "" },
+    content: { type: String, default: "" },
+    creator: { type: String, default:""},
+    ingredients: { type: String, default: "" },
     postedAt: { type: Date, default: Date.now }
 });
 

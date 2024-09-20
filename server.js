@@ -10,13 +10,16 @@ var app = express()
 
 mongoose.connect(`${process.env.MONGO_URL}`, {
     autoCreate: true,
-    family:4
-}).then(() => {console.log("connected")}).catch((err) => console.log(err))
+    family: 4
+}).then(() => { console.log("connected") }).catch((err) => console.log(err))
 
 app.use(cors());
+// app.use(express.urlencoded());
 app.use(cookieParser())
-app.use(express.json());
-app.use("/api",recipe)
+app.use(express.json({
+    
+}));
+app.use("/api", recipe)
 
 
 app.listen(4000, () => console.log("started"))

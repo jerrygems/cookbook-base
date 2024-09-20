@@ -10,12 +10,12 @@ const login = async (req, resp) => {
         if (exists) {
             const compResult = await bcrypt.compare(password, exists.password)
             if (!compResult) {
-                return resp.status(401).json({ message: 'please dont make it breach' })
+                return resp.status(500).json({ message: 'please dont make it breach' })
             }
             const token = jwt.sign({ email: exists.email,role:exists.role }, process.env.SECRET_KEY, { expiresIn: '1h' })
             return resp.status(200).json({ message: "logged in successfully", token })
         } else {
-            return resp.status(401).json({ message: 'you seems like a pro hacker' })
+            return resp.status(500).json({ message: 'you seems like a pro hacker' })
         }
 
     } catch (err) {
