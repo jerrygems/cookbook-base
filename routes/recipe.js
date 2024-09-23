@@ -1,5 +1,6 @@
 const express = require("express")
 const multer = require("multer")
+const path = require("path")
 const router = express.Router()
 const usersController = require("../controllers/user-controller")
 const authController = require("../controllers/auth-controller")
@@ -7,16 +8,16 @@ const recipeController = require("../controllers/recipe-controller")
 const verifyAdmin = require("../middlewares/verify-admin")
 
 
-const upload = multer(
-    multer.diskStorage({
+const upload = multer({
+    storage: multer.diskStorage({
         destination: (req, file, cb) => {
             cb(null, 'uploads/');
         },
         filename: (req, file, cb) => {
-            cb(null, Date.now() + path.extname(file.originalname) + path.extname(file.filename));
+            cb(null, Date.now() + path.extname(file.originalname));
         }
     })
-);
+});
 
 // router.use((req,res,next) => {
 //     console.log(req);
@@ -45,18 +46,25 @@ router.post("/create-recipe", upload.single('image'), (req, resp, next) => {
 router.post("/add-fav", (req, resp, next) => {
     recipeController.addToFav(req, resp, next)
 })
+router.get("/get-favs",(req,resp,next)=>{
+    recipeController.getAllFavs(req,resp,next)
+})
 router.delete("/delete-recipe", (req, resp, next) => {
     recipeController.deleteRecipe(req, resp, next)
 })
 router.get("/get-all-recipes", (req, resp, next) => {
     recipeController.getAllRecipes(req, resp, next)
 })
-router.get("/get-recipe", (req, resp, next) => {
+router.get("/get-recipe/:id", (req, resp, next) => {
     recipeController.getRecipe(req, resp, next)
 })
-router.put("/update-recipe", (req, resp, next) => {
+router.put("/update-recipe", upload.single('image'), (req, resp, next) => {
     recipeController.updateRecipe(req, resp, next)
 })
+router.get("/search-query", (req, resp, next) => {
+    recipeController.searchRecipe(req, resp, next)
+})
+
 
 
 module.exports = router

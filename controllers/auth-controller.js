@@ -12,7 +12,7 @@ const login = async (req, resp) => {
             if (!compResult) {
                 return resp.status(500).json({ message: 'please dont make it breach' })
             }
-            const token = jwt.sign({ email: exists.email,role:exists.role }, process.env.SECRET_KEY, { expiresIn: '1h' })
+            const token = jwt.sign({ id: exists._id, email: exists.email, role: exists.role }, process.env.SECRET_KEY, { expiresIn: '1h' })
             return resp.status(200).json({ message: "logged in successfully", token })
         } else {
             return resp.status(500).json({ message: 'you seems like a pro hacker' })
@@ -32,7 +32,7 @@ const register = async (req, resp) => {
                 email: email,
                 password: hashedPass
             })
-            const saved = await newUser.save().catch((e)=>console.log(e))
+            const saved = await newUser.save().catch((e) => console.log(e))
             if (saved) {
                 return resp.status(301).json({ message: "registered successfully" })
             } else {
